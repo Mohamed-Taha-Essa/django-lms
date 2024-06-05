@@ -1,12 +1,13 @@
-# Courses :
+# Courses
+
 -DATA :
-    - name 
-    - price 
-    - instructor_name 
-    - review 
+    - name
+    - price
+    - instructor_name
+    - review
     - category
     - subtitle
-    - num_lectures 
+    - num_lectures
     - num_quizes
     - duration
     - skill level
@@ -14,15 +15,15 @@
     - num_student
     - assesment
     - course_desc
-    -certification 
-    - learning_outcome 
+    -certification
+    - learning_outcome
     - curriculum:
         -first level
         - second level
         - final
     - instructors :
-        - image 
-        - name 
+        - image
+        - name
 
 
     - reviews 
@@ -35,7 +36,7 @@
 
 
 
-- functions: 
+- functions:
     - list all cources
     - course detail
 
