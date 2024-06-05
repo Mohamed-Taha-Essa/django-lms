@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django_bootstrap5',
 
+    'ckeditor',
     'accounts',
     'course',
 ]
@@ -126,9 +128,27 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+# Set the relative path to the CKEditor media upload directory
+# CKEDITOR_UPLOAD_PATH = 'content/ckeditor/'
+
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR/'media'
+# Optionally, you can specify the absolute path using the MEDIA_ROOT setting
+# Define your app's name
+APP_NAME = 'course'
+
+
+# Set the relative path to the CKEditor media upload directory
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, 'ckeditor/')
+
+
+# Set the CKEditor upload path for videos
+CKEDITOR_UPLOAD_PATH_VIDEO = os.path.join(APP_NAME, 'ckeditor', 'video')
+
+# Set the CKEditor upload path for PDF files
+CKEDITOR_UPLOAD_PATH_PDF = os.path.join(APP_NAME, 'ckeditor', 'pdf')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

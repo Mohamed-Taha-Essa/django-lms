@@ -1,3 +1,5 @@
+from ckeditor.fields import RichTextField
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
@@ -34,6 +36,32 @@ class Course(models.Model):
   
     def __str__(self):
         return self.name
+
+class Chapter(models.Model):
+    title = models.CharField(max_length=100)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='chapters_course')
+    # Add any other fields you need for the chapter
+
+    def __str__(self):
+        return self.title
+
+
+class Lesson(models.Model):
+    LESSON_TYPE_CHOICES = (
+        ('text', _('Text')),
+        ('video', _('Video')),
+        ('pdf', _('PDF')),
+    )
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='lessons_chapter',verbose_name=_('chapter'))
+
+    title = models.CharField(_('title'),max_length=100)
+    lesson_type = models.CharField(_('lesson type'),max_length=10, choices=LESSON_TYPE_CHOICES)
+    content = models.FileField(_('content'),upload_to='lesson/pdf/', null=True, blank=True)
+    video_file = models.FileField(_('video file'),upload_to='lesson/video/', null=True, blank=True)
+
+    content_vid_pdf = RichTextField(blank=True, null=True)
+    def __str__(self):
+        return self.title
 
 class Category(models.Model):
     name = models.CharField(_("name"), max_length=255)
