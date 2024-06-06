@@ -30,7 +30,7 @@ class Course(models.Model):
     course_desc = models.TextField(_("course description"), max_length=30000)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated at"), auto_now=True)
-   
+    image =models.ImageField(_("image"), upload_to='course', height_field=None, width_field=None, max_length=None)
     certification = models.CharField(_("certification"), max_length=255, blank=True, null=True)
     learning_outcomes = models.TextField(_("learning outcomes"), blank=True, null=True)
   
