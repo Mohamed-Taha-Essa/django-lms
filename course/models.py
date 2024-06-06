@@ -38,13 +38,16 @@ class Course(models.Model):
         return self.name
 
 class Chapter(models.Model):
-    title = models.CharField(max_length=100)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='chapters_course')
-    # Add any other fields you need for the chapter
+    course = models.ForeignKey(Course, related_name='chapters_course', on_delete=models.CASCADE, verbose_name=_("course"))
+    title = models.CharField(_("title"), max_length=255)
+    description = models.TextField(_("description"), blank=True, null=True)
+    order = models.PositiveIntegerField(_("order"))
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
         return self.title
-
 
 class Lesson(models.Model):
     LESSON_TYPE_CHOICES = (
