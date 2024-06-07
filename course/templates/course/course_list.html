@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% load static %}
 
@@ -104,22 +105,22 @@
 											<a href="#" class="btn">Read More</a>
 										</div>
 										<div class="info-bx text-center">
-											<h5><a href="#">{{course.name|truncatewords:3}} – LMS plugin</a></h5>
+											<h5><a href="#">{{course.name|truncatewords:2}}</a></h5>
 											<span>{{course.category}}</span>
 										</div>
 										<div class="cours-more-info">
 											<div class="review">
-												<span>3 Review</span>
+												<span>{{course.review_count}} Review</span>
 												<ul class="cours-star">
-													<li class="active"><i class="fa fa-star"></i></li>
-													<li class="active"><i class="fa fa-star"></i></li>
-													<li class="active"><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
+													<i class=" icofont-star {% if object.avg_rate > 0 %}  active  {% endif %}"></i>
+													<i class=" icofont-star {% if object.avg_rate > 1 %}  active  {% endif %}"></i>
+													<i class=" icofont-star {% if object.avg_rate > 2 %}  active  {% endif %}"></i>
+													<i class=" icofont-star {% if object.avg_rate > 3 %}  active  {% endif %}"></i>
+													<i class="icofont-star {% if object.avg_rate > 4 %}  active  {% endif %}"></i>
 												</ul>
 											</div>
 											<div class="price">
-												<del>$190</del>
+												<del>${{course.price|mul:1.1 |floatformat:2}}</del>
 												<h5>${{course.price}}</h5>
 											</div>
 										</div>
