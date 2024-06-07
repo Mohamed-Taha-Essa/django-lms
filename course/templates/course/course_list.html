@@ -93,16 +93,19 @@
 						</div>
 						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="row">
-								{% comment %} ########################## {% endcomment %}
+								
+								{% for course in courses   %}
+									
+									
 								<div class="col-md-6 col-lg-4 col-sm-6 m-b30">
 									<div class="cours-bx">
 										<div class="action-box">
-											<img src="assets/images/courses/pic1.jpg" alt="">
+											<img src="{{course.image.url}}" alt="">
 											<a href="#" class="btn">Read More</a>
 										</div>
 										<div class="info-bx text-center">
-											<h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
-											<span>Programming</span>
+											<h5><a href="#">{{course.name|truncatewords:3}} – LMS plugin</a></h5>
+											<span>{{course.category}}</span>
 										</div>
 										<div class="cours-more-info">
 											<div class="review">
@@ -117,12 +120,14 @@
 											</div>
 											<div class="price">
 												<del>$190</del>
-												<h5>$120</h5>
+												<h5>${{course.price}}</h5>
 											</div>
 										</div>
 									</div>
 								</div>
-							
+								
+								{% endfor %}
+
 								<div class="col-lg-12 m-b20">
 									<div class="pagination-bx rounded-sm gray clearfix">
 										<ul class="pagination">

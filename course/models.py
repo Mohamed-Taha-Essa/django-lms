@@ -36,7 +36,22 @@ class Course(models.Model):
   
     def __str__(self):
         return self.name
-
+    @property
+    def review_count(self ):
+        reviews= self.reviews_course.all().count()
+        return reviews
+    
+    @property
+    def avg_rate(self ):
+        reviews = self.reviews_course.all()
+        temp =0 
+        if len(reviews)>0:
+            for obj in reviews:
+                temp +=obj.rate
+            avg_rate = temp /len(reviews)
+        else :
+            avg_rate =0 
+        return avg_rate
 class Chapter(models.Model):
     course = models.ForeignKey(Course, related_name='chapters_course', on_delete=models.CASCADE, verbose_name=_("course"))
     title = models.CharField(_("title"), max_length=255)
