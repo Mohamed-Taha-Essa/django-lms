@@ -1,4 +1,6 @@
+from django.db.models import Count
 from ckeditor.fields import RichTextField
+from datetime import timedelta
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +26,7 @@ class Course(models.Model):
     name = models.CharField(_("name"), max_length=50)
     price = models.DecimalField(_("price"), max_digits=5, decimal_places=2)
     subtitle = models.TextField(_("subtitle"), max_length=1000)
-    duration = models.IntegerField(_("duration"))
+    duration = models.IntegerField(_("duration") ,default=100)
     skill_level = models.CharField(_("skill level"), max_length=50, choices=SKILLLEVEL)
     language = models.CharField(_("language"), max_length=50, choices=LANGUAGE)
     course_desc = models.TextField(_("course description"), max_length=30000)
@@ -32,10 +34,20 @@ class Course(models.Model):
     updated_at = models.DateTimeField(_("updated at"), auto_now=True)
     image =models.ImageField(_("image"), upload_to='course', height_field=None, width_field=None, max_length=None)
     certification = models.CharField(_("certification"), max_length=255, blank=True, null=True)
-    learning_outcomes = models.TextField(_("learning outcomes"), blank=True, null=True)
-  
+    learning_outcomes =RichTextField(blank=True, null=True)
+    description = models.TextField(_("description") ,blank=True, null=True)
+
     def __str__(self):
         return self.name
+    @property
+    def num_lessons(self):
+        return self.chapters_course.aggregate(num_lessons=Count('lessons_chapter'))['num_lessons']
+    
+    @property
+    def num_quizzes(self):
+        return self.assessments_course.filter(assessment_type='quiz').count()
+
+
     @property
     def review_count(self ):
         reviews= self.reviews_course.all().count()
@@ -52,6 +64,8 @@ class Course(models.Model):
         else :
             avg_rate =0 
         return avg_rate
+    
+
 class Chapter(models.Model):
     course = models.ForeignKey(Course, related_name='chapters_course', on_delete=models.CASCADE, verbose_name=_("course"))
     title = models.CharField(_("title"), max_length=255)
@@ -76,7 +90,7 @@ class Lesson(models.Model):
     lesson_type = models.CharField(_('lesson type'),max_length=10, choices=LESSON_TYPE_CHOICES)
     content = models.FileField(_('content'),upload_to='lesson/pdf/', null=True, blank=True)
     video_file = models.FileField(_('video file'),upload_to='lesson/video/', null=True, blank=True)
-
+    duration = models.IntegerField(_('duration'),default=100) 
     content_vid_pdf = RichTextField(blank=True, null=True)
     def __str__(self):
         return self.title

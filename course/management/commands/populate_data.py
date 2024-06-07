@@ -13,14 +13,14 @@ class Command(BaseCommand):
         fake = Faker()
 
         # Create categories
-        for _ in range(5):
+        for _ in range(7):
             Category.objects.create(
                 name=fake.word(),
                 description=fake.sentence()
             )
 
         # Create users
-        for _ in range(10):
+        for _ in range(20):
             User.objects.create_user(
                 username=fake.user_name(),
                 email=fake.email(),
@@ -31,7 +31,7 @@ class Command(BaseCommand):
         categories = Category.objects.all()
 
         # Create courses
-        for _ in range(10):
+        for _ in range(20):
             instructor = random.choice(users)
             category = random.choice(categories)
 
@@ -56,7 +56,7 @@ class Command(BaseCommand):
             self.create_dummy_chapters(course)
 
         # Create reviews
-        for _ in range(20):
+        for _ in range(40):
             student = random.choice(users)
             course = random.choice(Course.objects.all())
             rate = random.randint(1, 5)
@@ -70,7 +70,7 @@ class Command(BaseCommand):
             )
 
         # Create assessments
-        for _ in range(5):
+        for _ in range(30):
             course = random.choice(Course.objects.all())
 
             Assessment.objects.create(
@@ -92,7 +92,7 @@ class Command(BaseCommand):
 
     def create_dummy_chapters(self, course):
         fake = Faker()
-        num_chapters = random.randint(2, 5)
+        num_chapters = random.randint(2, 10)
         for i in range(1, num_chapters + 1):
             chapter = Chapter.objects.create(
                 course=course,

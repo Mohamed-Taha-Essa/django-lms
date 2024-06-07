@@ -42,7 +42,8 @@
 								<div class="teacher-bx">
 									<div class="teacher-info">
 										<div class="teacher-thumb">
-											<img src="assets/images/testimonials/pic1.jpg" alt=""/>
+											<img src="{% static 'en/images/testimonials/pic1.jpg' %}" alt=""/>
+                                           
 										</div>
 										<div class="teacher-name">
 											<h5>Hinata Hyuga</h5>
@@ -52,18 +53,18 @@
 								</div>
 								<div class="cours-more-info">
 									<div class="review">
-										<span>3 Review</span>
+										<span>{{course.review_count}} Review</span>
 										<ul class="cours-star">
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
+											<i class=" icofont-star {% if object.avg_rate > 0 %}  active  {% endif %}"></i>
+                                            <i class=" icofont-star {% if object.avg_rate > 1 %}  active  {% endif %}"></i>
+                                            <i class=" icofont-star {% if object.avg_rate > 2 %}  active  {% endif %}"></i>
+                                            <i class=" icofont-star {% if object.avg_rate > 3 %}  active  {% endif %}"></i>
+                                            <i class="icofont-star {% if object.avg_rate > 4 %}  active  {% endif %}"></i>
 										</ul>
 									</div>
 									<div class="price categories">
 										<span>Categories</span>
-										<h5 class="text-primary">Frontend</h5>
+										<h5 class="text-primary">{{course.category}}</h5>
 									</div>
 								</div>
 								<div class="course-info-list scroll-page">
@@ -80,15 +81,15 @@
 						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="courses-post">
 								<div class="ttr-post-media media-effect">
-									<a href="#"><img src="assets/images/blog/default/thum1.jpg" alt=""></a>
+									<a href="#"><img src="{{ course.image.url}}" alt=""></a>
 								</div>
 								<div class="ttr-post-info">
 									<div class="ttr-post-title ">
-										<h2 class="post-title">Nvidia and UE4 Technologies Practice</h2>
+										<h2 class="post-title">{{course.name}}</h2>
 									</div>
 									<div class="ttr-post-text">
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-									</div>
+                                        <p> {{course.subtitle}} </p>
+                                    </div>
 								</div>
 							</div>
 							<div class="courese-overview" id="overview">
@@ -96,22 +97,29 @@
 								<div class="row">
 									<div class="col-md-12 col-lg-4">
 										<ul class="course-features">
-											<li><i class="ti-book"></i> <span class="label">Lectures</span> <span class="value">8</span></li>
-											<li><i class="ti-help-alt"></i> <span class="label">Quizzes</span> <span class="value">1</span></li>
-											<li><i class="ti-time"></i> <span class="label">Duration</span> <span class="value">60 hours</span></li>
-											<li><i class="ti-stats-up"></i> <span class="label">Skill level</span> <span class="value">Beginner</span></li>
-											<li><i class="ti-smallcap"></i> <span class="label">Language</span> <span class="value">English</span></li>
-											<li><i class="ti-user"></i> <span class="label">Students</span> <span class="value">32</span></li>
-											<li><i class="ti-check-box"></i> <span class="label">Assessments</span> <span class="value">Yes</span></li>
+											<li><i class="ti-book"></i> <span class="label">Lectures</span> <span class="value">{{course.num_lessons}}</span></li>
+											<li><i class="ti-help-alt"></i> <span class="label">Quizzes</span> <span class="value">{{course.num_quizzes}}</span></li>
+											<li><i class="ti-time"></i> <span class="label">Duration</span> <span class="value">{{course.duration}}</span></li>
+											<li><i class="ti-stats-up"></i> <span class="label">Skill level</span> <span class="value">{{course.skill_level}}</span></li>
+											<li><i class="ti-smallcap"></i> <span class="label">Language</span> <span class="value">{{course.language}}</span></li>
+											<li><i class="ti-user"></i> <span class="label">Students</span> <span class="value">{{course.enrollments_course.all.count }}</span></li>
+											<li><i class="ti-check-box"></i> <span class="label">Assessments</span> 
+                                            {% if course.assessments_course.all.count > 0 %}
+                                                <span class="value">Yes </span>
+                                                {% else %}
+                                                <span class="value">NO </span>
+                                            {% endif %}
+                                                 </li>
 										</ul>
 									</div>
 									<div class="col-md-12 col-lg-8">
 										<h5 class="m-b5">Course Description</h5>
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+										<p>{{course.description}}</p>
 										<h5 class="m-b5">Certification</h5>
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+										<p> {{course.certification}} </p>
 										<h5 class="m-b5">Learning Outcomes</h5>
 										<ul class="list-checked primary">
+                                            <li>{{course.learning_outcomes}}</li>
 											<li>Over 37 lectures and 55.5 hours of content!</li>
 											<li>LIVE PROJECT End to End Software Testing Training Included.</li>
 											<li>Learn Software Testing and Automation basics from a professional trainer from your own desk.</li>
@@ -126,70 +134,29 @@
 							</div>
 							<div class="m-b30" id="curriculum">
 								<h4>Curriculum</h4>
+                                <h2>{{ course.name }}</h2>
+                                <p>{{ course.description }}</p>
 								<ul class="curriculum-list">
-										<li>
-											<h5>First Level</h5>
-											<ul>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Lesson 1.</span> Introduction to UI Design
-													</div>
-													<span>120 minutes</span>
-												</li>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Lesson 2.</span> User Research and Design
-													</div>
-													<span>60 minutes</span>
-												</li>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Lesson 3.</span> Evaluating User Interfaces Part 1
-													</div>
-													<span>85 minutes</span>
-												</li>
-											</ul>
-										</li>
-										<li>
-											<h5>Second Level</h5>
-											<ul>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Lesson 1.</span> Prototyping and Design
-													</div>
-													<span>110 minutes</span>
-												</li>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Lesson 2.</span> UI Design Capstone
-													</div>
-													<span>120 minutes</span>
-												</li>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Lesson 3.</span> Evaluating User Interfaces Part 2
-													</div>
-													<span>120 minutes</span>
-												</li>
-											</ul>
-										</li>
-										<li>
-											<h5>Final</h5>
-											<ul>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Part 1.</span> Final Test
-													</div>
-													<span>120 minutes</span>
-												</li>
-												<li>
-													<div class="curriculum-list-box">
-														<span>Part 2.</span> Online Test
-													</div>
-													<span>120 minutes</span>
-												</li>
-											</ul>
-										</li>
+                                    
+                                    {% for chapter  in chapters  %}
+                                       
+                                        <li>
+                                            <h5>{{chapter.title}}</h5>
+                                            <ul>
+                                                
+                                                {% for lesson in chapter.lessons_chapter.all %}
+                                                   
+                                                    <li>
+                                                        <div class="curriculum-list-box">
+
+                                                            <span>Lesson {{ forloop.counter }}</span> {{ lesson.title }}
+                                                        </div>
+                                                        <span>{{lesson.duration}} minutes</span>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
 									</ul>
 							</div>
 							<div class="" id="instructor">
@@ -227,20 +194,23 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="" id="reviews">
 								<h4>Reviews</h4>
 								
 								<div class="review-bx">
 									<div class="all-review">
-										<h2 class="rating-type">3</h2>
+										<h2 class="rating-type">{{course.review_count}}</h2>
 										<ul class="cours-star">
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
+                                            <!-- <i class=" icofont-star {% if object.avg_rate > 0 %}  active  {% endif %}"></i> -->
+
+											<li class="{% if object.avg_rate > 0 %}  active  {% endif %}"><i class="fa fa-star"></i></li>
+											<li class="{% if object.avg_rate > 1 %}  active  {% endif %}"><i class="fa fa-star"></i></li>
+											<li class="{% if object.avg_rate > 2 %}  active  {% endif %}"><i class="fa fa-star"></i></li>
+											<li class="{% if object.avg_rate > 3 %}  active  {% endif %}"><i class="fa fa-star"></i></li>
+											<li class="{% if object.avg_rate > 4 %}  active  {% endif %}"><i class="fa fa-star"></i></li>
 										</ul>
-										<span>3 Rating</span>
+										<span>{{ course.review_count }}Rating</span>
 									</div>
 									<div class="review-bar">
 										<div class="bar-bx">
