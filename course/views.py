@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
-from .models import Course
+from .models import Course ,Review
 
 
 
@@ -21,6 +21,8 @@ class CourseDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['chapters'] = self.object.chapters_course.prefetch_related('lessons_chapter').all()
+        review_statistics = Review.objects.filter(course=self.object).values('rate').annotate(count=Count('id'))
+        context['review_statistics'] = review_statistics
         return context
 
     # def get_context_data(self, **kwargs):
