@@ -23,6 +23,10 @@ class CourseDetailView(DetailView):
         context['chapters'] = self.object.chapters_course.prefetch_related('lessons_chapter').all()
         review_statistics = Review.objects.filter(course=self.object).values('rate').annotate(count=Count('id'))
         context['review_statistics'] = review_statistics
+
+          # Check if the instructor is an instructor and include in the context
+        if self.object.instructor.profile.is_instructor:
+            context['instructor'] = self.object.instructor
         return context
 
     # def get_context_data(self, **kwargs):

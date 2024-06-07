@@ -9,8 +9,11 @@ from utils.generate_code import generate_code
 
 class Profile(models.Model):
     user = models.OneToOneField(User , related_name = 'profile', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='profile')
+    image = models.ImageField(upload_to='profile',blank=True ,null=True)
     code = models.CharField( max_length=10 , default = generate_code)
+    is_instructor = models.BooleanField(default=False)
+    subject = models.CharField(max_length=100, blank=True, null=True)
+
     def __str__(self):
         return str(self.user)
     

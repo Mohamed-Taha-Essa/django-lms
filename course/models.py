@@ -18,6 +18,9 @@ LANGUAGE = [
     ('En', _('English')),
     ('Ar', _('Arabic'))
 ]
+# class CourseManager(models.Manager):
+#     def get_queryset(self):
+#         return super().get_queryset().filter(instructor__profile__is_instructor=True)
 
 class Course(models.Model):
     instructor = models.ForeignKey(User, related_name='course_instructor', on_delete=models.CASCADE, verbose_name=_("instructor"))
@@ -39,6 +42,9 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
+    
+    # objects = models.Manager()
+    # instructor_objects = CourseManager()
     @property
     def num_lessons(self):
         return self.chapters_course.aggregate(num_lessons=Count('lessons_chapter'))['num_lessons']
